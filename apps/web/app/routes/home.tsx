@@ -441,7 +441,7 @@ export default function Home() {
                 placeholder="Search for products, brands, or keywords..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="pl-10 h-12"
+                className="pl-10 h-12 bg-white"
               />
               {isLoading && (
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
