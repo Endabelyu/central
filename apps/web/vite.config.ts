@@ -6,7 +6,4 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   publicDir: "public",
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
-  build: {
-    outDir: "build/client", // ✅ matches your Netlify setting
-  },
 });
