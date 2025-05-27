@@ -2,3 +2,11 @@
   from = "/*"
   to = "/.netlify/functions/server"
   status = 200
+
+
+[build]
+command = "react-router build"
+publish = "build/client"
+
+[dev]
+command = "react-router dev"
