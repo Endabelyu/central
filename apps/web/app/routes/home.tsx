@@ -30,6 +30,8 @@ import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Checkbox } from "~/components/ui/checkbox";
 import Image from "~/components/imageContainer";
+import { useQuery } from "@tanstack/react-query";
+import { useTRPC } from "~/lib/trpc";
 
 const products = [
   {
@@ -387,7 +389,24 @@ export default function Home() {
     e.preventDefault();
     // Search is handled by useEffect
   };
-
+  const trpc = useTRPC();
+  const userQuery = useQuery(
+    trpc.product.getAll.queryOptions({
+      page: 2,
+      limit: 10,
+      q: "",
+      sort: "asc",
+    }),
+  );
+  // const trpc = useTRPC();
+  // const userQuery = useQuery(
+  //   trpc.product.getAll.queryOptions({
+  //     page: 2,
+  //     limit: 10,
+  //     q: "",
+  //     sort: "asc",
+  //   }),
+  // );
   return (
     <div className="min-h-screen ">
       {/* Simplified Header */}

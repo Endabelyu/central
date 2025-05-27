@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import BaseLayout from "./routes/root/BaseLayout";
+import { QueryClient } from "@tanstack/react-query";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -24,6 +25,11 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+// export default function ProductList() {
+//   const { data, error, isLoading } = useTRPC().product.getAll.useQuery({
+//     page: 1,
+//     limit: 10,
+//   });
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

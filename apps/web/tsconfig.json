@@ -3,9 +3,14 @@
     "**/*",
     "**/.server/**/*",
     "**/.client/**/*",
-    ".react-router/types/**/*"
+    ".react-router/types/**/*",
+    "src",
+    "../../packages/trpc"
   ],
+  "extends": "../../packages/tsconfig.json",
+
   "compilerOptions": {
+    // "composite": true,
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["node", "vite/client"],
     "target": "ES2022",
@@ -16,7 +21,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@trpc/*": ["../../packages/trpc/*"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
