@@ -1,9 +1,14 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
 
-const app = new Hono()
+import { cors } from "hono/cors";
+import trpcRoute from "./trpc/trpcAdapter";
+const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+// app.use("/trpc/*", handleTRPC(appRouter));
+app.use(cors());
+app.get("/", c => {
+  return c.text("Hello Hono!");
+});
+app.route("/", trpcRoute);
 
-export default app
+export default app;

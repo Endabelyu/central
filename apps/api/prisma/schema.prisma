@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id                   String   @id @db.VarChar(26) // ULID format (26-character string)
+  email  String @unique
+  name   String?
+  password   Password?
+  
+   createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("users")
+  }
+
+model Password {
+  id String @id @default(cuid())
+
+  hash String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  @@map("passwords")
+
+}
+
+model Product {
+  id                   String   @id @db.VarChar(26) // ULID format (26-character string)
+  sku                   String   @unique
+  slug                  String   @unique
+  name                  String
+  description           String
+  price                 Decimal  @db.Decimal(10, 2)
+  imageUrl              String?
+  stockQuantity         Int
+  minimumOrderQuantity  Int
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  condition             String       // e.g., "Original used"
+  grade                String?       // e.g., "A+ (Almost new)"
+  ram                   String?       // e.g., "4GB"
+  storageOptions        String[]      // ["64GB", "128GB", "256GB"]
+  screenSize            String?       // e.g., "5.4 inches"
+  battery               String?       // e.g., "2815 mAh"
+  weight                String?       // e.g., "135g"
+  resolution            String?       // e.g., "1242 × 2688 pixels"
+  cpu                   String?       // e.g., "Hexa-core (2×2.5 GHz Vortex...)"
+  simType               String?       // e.g., "Nano-SIM, eSIM"
+  nfc                   Boolean?      // true or false
+  brand                 String?       // e.g., "Apple"
+  modelNumber           String?       // e.g., "Phone 12 mini"
+  imageGallery          String[]      // list of additional image URLs
+  videoUrl              String?       // product video
+  supplierName          String?       // e.g., "Shenzhen Soonton..."
+}
