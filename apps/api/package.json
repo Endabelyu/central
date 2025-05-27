@@ -16,7 +16,6 @@
   "dependencies": {
     "@hono/trpc-server": "^0.3.4",
     "@prisma/client": "^6.8.2",
-    "@trpc/server": "^11.1.3",
     "@types/node": "^22.15.21",
     "hono": "^4.7.10",
     "nanoid": "^5.1.5",

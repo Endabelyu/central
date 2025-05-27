@@ -1,7 +1,12 @@
 {
+  "extends": "../../packages/tsconfig.json",
   "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "jsxImportSource": "hono/jsx",
     "strict": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
-  }
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
 }
