@@ -13,23 +13,22 @@ import {
   Grid,
   List,
 } from "lucide-react";
-
-import { Link } from "react-router";
-import { Button } from "~/components/ui/button";
-import { Badge } from "~/components/ui/badge";
-import { Card, CardContent } from "~/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import { Slider } from "~/components/ui/slider";
-import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
-import { Checkbox } from "~/components/ui/checkbox";
-import Image from "~/components/imageContainer";
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import Image from "@/components/imageContainer";
 
 const products = [
   {
@@ -217,7 +216,7 @@ const useDebounce = (value: string, delay: number) => {
   return debouncedValue;
 };
 
-export default function Home() {
+export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [priceRange, setPriceRange] = useState([0, 1000]);
