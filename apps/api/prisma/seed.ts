@@ -31,6 +31,7 @@ async function main() {
     brand: base.brand || "Generic",
     model: base.model || [],
     imageGallery: base.images,
+    quantityUnit: base.quantityUnit,
     videoUrl: "https://example.com/video.mp4",
     supplierName: base.supplierName || "Generic",
     supplierVerified: base.supplierVerified || false,

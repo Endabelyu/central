@@ -66,6 +66,7 @@ model Product {
   imageGallery          String[]      // list of additional image URLs
   videoUrl              String?       // product video
   supplierName          String       // e.g., "Shenzhen Soonton..."
+  quantityUnit          String  @default("pieces")     // e.g., "Shenzhen Soonton..."
   supplierVerified      Boolean  @default(false)     // e.g., "Shenzhen Soonton..."
   levelSupplier          Int @default(0)
   rating                 Float @default(0)
