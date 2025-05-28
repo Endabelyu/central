@@ -50,9 +50,10 @@ model Product {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   condition             String       // e.g., "Original used"
-  grade                String?       // e.g., "A+ (Almost new)"
-  ram                   String?       // e.g., "4GB"
-  storageOptions        String[]      // ["64GB", "128GB", "256GB"]
+  grade                 String[]       // e.g., "A+ (Almost new)"
+  ram                   String[]       // e.g., "4GB"
+  variant                   String[] @default([])      // e.g., "4GB"
+  storage               String[]  @default([])    // ["64GB", "128GB", "256GB"]
   screenSize            String?       // e.g., "5.4 inches"
   battery               String?       // e.g., "2815 mAh"
   weight                String?       // e.g., "135g"
@@ -61,8 +62,22 @@ model Product {
   simType               String?       // e.g., "Nano-SIM, eSIM"
   nfc                   Boolean?      // true or false
   brand                 String?       // e.g., "Apple"
-  modelNumber           String?       // e.g., "Phone 12 mini"
+  model           String[]       // e.g., "Phone 12 mini"
   imageGallery          String[]      // list of additional image URLs
   videoUrl              String?       // product video
-  supplierName          String?       // e.g., "Shenzhen Soonton..."
+  supplierName          String       // e.g., "Shenzhen Soonton..."
+  supplierVerified      Boolean  @default(false)     // e.g., "Shenzhen Soonton..."
+  levelSupplier          Int @default(0)
+  rating                 Float @default(0)
+  pricingTiers         ProductPricingTier[] // ✅ relation
 }
+model ProductPricingTier {
+  id          String   @id @default(uuid())
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String
+  minQty      Int
+  maxQty      Int?
+  price       Decimal  @db.Decimal(10, 2)
+
+  createdAt   DateTime @default(now())
+} 
