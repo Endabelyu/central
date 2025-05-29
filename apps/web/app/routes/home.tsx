@@ -492,11 +492,15 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                   ) : pagination?.total ? (
                     <>
                       Showing
-                      {currentPage === 1
+                      {(searchParams.get("page")
+                        ? searchParams.get("page")
+                        : 1) === "1"
                         ? ` ${pagination?.currentPage} `
                         : ` ${(pagination?.currentPage - 1) * 8 + 1} `}
                       -
-                      {currentPage === 1
+                      {(searchParams.get("page")
+                        ? searchParams.get("page")
+                        : 1) === 1
                         ? `8 `
                         : ` ${pagination?.currentPage * 8} `}
                       of {pagination?.total} results
@@ -561,7 +565,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                       key={productsData.id}
                       className="hover:shadow-lg transition-shadow h-full flex flex-col"
                     >
-                      <CardContent className="p-4 flex flex-col h-full">
+                      <CardContent className="p-4 grid grid-cols-1 h-full">
                         <div className="relative mb-3 group">
                           <Carousel className=" ">
                             <CarouselContent>
