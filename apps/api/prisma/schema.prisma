@@ -43,7 +43,6 @@ model Product {
   slug                  String   @unique
   name                  String
   description           String
-  price                 Decimal  @db.Decimal(10, 2)
   imageUrl              String?
   stockQuantity         Int
   minimumOrderQuantity  Int
@@ -79,6 +78,5 @@ model ProductPricingTier {
   minQty      Int
   maxQty      Int?
   price       Decimal  @db.Decimal(10, 2)
-
   createdAt   DateTime @default(now())
 } 

@@ -30,13 +30,11 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [
-        { minQty: 2, maxQty: 49, price: 705 },
-        { minQty: 50, maxQty: 99, price: 429 },
-        { minQty: 100, maxQty: null, price: 281 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 2, maxQty: 49, price: 705 },
+      { minQty: 50, maxQty: 99, price: 429 },
+      { minQty: 100, maxQty: null, price: 281 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/Global-Version-Red-Mi-14C-Smartphone_1601336362310.html?spm=a2700.galleryofferlist.p_offer.d_image.d98613a0Gyfj7e&s=p
@@ -69,15 +67,13 @@ export const dataProducts = [
     supplierName: "Hongpin Times (shenzhen) Technology Co., Ltd.",
     supplierVerified: true,
     levelSupplier: 2,
-    rating: 4.5,
+    rating: 5.0,
     quantityUnit: "packs",
-    pricingTiers: {
-      create: [
-        { minQty: 10, maxQty: 19, price: 99 },
-        { minQty: 20, maxQty: 199, price: 98 },
-        { minQty: 200, maxQty: null, price: 97 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 10, maxQty: 19, price: 99 },
+      { minQty: 20, maxQty: 199, price: 98 },
+      { minQty: 200, maxQty: null, price: 97 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/Good-Sell-Second-Hand-Phone-Original_1600673687194.html?spm=a2700.galleryofferlist.normal_offer.d_image.d98613a0Gyfj7e
@@ -122,13 +118,11 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "piece",
-    pricingTiers: {
-      create: [
-        { minQty: 10, maxQty: 19, price: 72 },
-        { minQty: 20, maxQty: 199, price: 98 },
-        { minQty: 200, maxQty: null, price: 97 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 10, maxQty: 19, price: 72 },
+      { minQty: 20, maxQty: 199, price: 98 },
+      { minQty: 200, maxQty: null, price: 97 },
+    ],
   },
   {
     //  https://www.alibaba.com/product-detail/Used-For-IPhone-13-Pro-512GB_1601404122861.html?spm=a2700.galleryofferlist.p_offer.d_image.d98613a0Gyfj7e&s=p
@@ -163,12 +157,10 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [
-        { minQty: 2, maxQty: 49, price: 199 },
-        { minQty: 50, maxQty: null, price: 149 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 2, maxQty: 49, price: 199 },
+      { minQty: 50, maxQty: null, price: 149 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/High-Quality-S24-Ultra-16G-1TB_1601417388307.html?spm=a2700.galleryofferlist.p_offer.d_image.d98613a0Gyfj7e&s=p&selectedCarrierCode=SEMI_MANAGED_STANDARD@@STANDARD
@@ -211,9 +203,7 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [{ minQty: 1, maxQty: null, price: 74.25 }],
-    },
+    pricingTiers: [{ minQty: 1, maxQty: null, price: 74.25 }],
   },
   {
     // https://www.alibaba.com/product-detail/Wholesale-Original-Unlocked-Used-Brand-Mobile_1601392811056.html?spm=a2700.galleryofferlist.normal_offer.d_image.d98613a0Gyfj7e
@@ -249,12 +239,10 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "piece",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: null, price: 670 },
-        { minQty: 1, maxQty: null, price: 950 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: null, price: 670 },
+      { minQty: 1, maxQty: null, price: 950 },
+    ],
   },
   {
     // https://app.uploadcare.com/projects/c470f78b8a2fe3b107f0/files/94757939-8ea1-4639-8348-8790ee3d4ade/
@@ -290,14 +278,12 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "units",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: 49, price: 58.8 },
-        { minQty: 50, maxQty: 99, price: 51.8 },
-        { minQty: 100, maxQty: 4999, price: 48.8 },
-        { minQty: 5000, maxQty: null, price: 38.8 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: 49, price: 58.8 },
+      { minQty: 50, maxQty: 99, price: 51.8 },
+      { minQty: 100, maxQty: 4999, price: 48.8 },
+      { minQty: 5000, maxQty: null, price: 38.8 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/USA-STOCK-For-Apple-Iphone-14_1601447226365.html?spm=a2700.galleryofferlist.p_offer.d_image.d98613a0Gyfj7e&s=p
@@ -333,14 +319,12 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "units",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: 49, price: 58.8 },
-        { minQty: 50, maxQty: 99, price: 51.8 },
-        { minQty: 100, maxQty: 4999, price: 48.8 },
-        { minQty: 5000, maxQty: null, price: 38.8 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: 49, price: 58.8 },
+      { minQty: 50, maxQty: 99, price: 51.8 },
+      { minQty: 100, maxQty: 4999, price: 48.8 },
+      { minQty: 5000, maxQty: null, price: 38.8 },
+    ],
   },
   {
     //  https://www.alibaba.com/product-detail/LOW-Price-Mobile-Phones-Used-Mobile_1600691926824.html?spm=a2700.galleryofferlist.normal_offer.d_image.d98613a0Gyfj7e
@@ -385,12 +369,10 @@ export const dataProducts = [
     levelSupplier: 1,
     rating: 4.5,
     quantityUnit: "units",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: null, price: 135 },
-        { minQty: 1, maxQty: null, price: 460 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: null, price: 135 },
+      { minQty: 1, maxQty: null, price: 460 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/China-Used-Mobile-Phones-Wholesale-99_1601384722580.html?spm=a2700.galleryofferlist.normal_offer.d_image.d98613a0Gyfj7e
@@ -426,12 +408,10 @@ export const dataProducts = [
     levelSupplier: 2,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [
-        { minQty: 2, maxQty: 99, price: 220 },
-        { minQty: 100, maxQty: null, price: 185 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 2, maxQty: 99, price: 220 },
+      { minQty: 100, maxQty: null, price: 185 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/Phone-Second-Hand-Mobile-Phone-11_1601115160318.html?spm=a2700.galleryofferlist.normal_offer.d_image.d98613a0Gyfj7e
@@ -467,12 +447,10 @@ export const dataProducts = [
     levelSupplier: 1,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: 9, price: 200 },
-        { minQty: 10, maxQty: null, price: 195 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: 9, price: 200 },
+      { minQty: 10, maxQty: null, price: 195 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/Hot-Selling-Original-Used-Unlock-85_1600795894335.html?spm=a2700.galleryofferlist.normal_offer.d_image.d98613a0Gyfj7e
@@ -507,13 +485,11 @@ export const dataProducts = [
     levelSupplier: 1,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: 49, price: 125 },
-        { minQty: 50, maxQty: 999, price: 115 },
-        { minQty: 100, maxQty: null, price: 110 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: 49, price: 125 },
+      { minQty: 50, maxQty: 999, price: 115 },
+      { minQty: 100, maxQty: null, price: 110 },
+    ],
   },
   {
     //  https://www.alibaba.com/product-detail/For-Xiaomi-Redmi-Note-12-Pro_1601429612215.html?spm=a2700.galleryofferlist.p_offer.d_image.d98613a0Gyfj7e&s=p
@@ -549,13 +525,11 @@ export const dataProducts = [
     levelSupplier: 1,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: 49, price: 110 },
-        { minQty: 50, maxQty: 999, price: 95 },
-        { minQty: 100, maxQty: null, price: 89 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: 49, price: 110 },
+      { minQty: 50, maxQty: 999, price: 95 },
+      { minQty: 100, maxQty: null, price: 89 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/Wholesale-High-Quality-Original-Used-Phone_1601416913776.html?spm=a2700.galleryofferlist.normal_offer.d_image.d98613a0Gyfj7e
@@ -591,12 +565,10 @@ export const dataProducts = [
     levelSupplier: 1,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [
-        { minQty: 1, maxQty: null, price: 168 },
-        { minQty: 1, maxQty: null, price: 245 },
-      ],
-    },
+    pricingTiers: [
+      { minQty: 1, maxQty: null, price: 168 },
+      { minQty: 1, maxQty: null, price: 245 },
+    ],
   },
   {
     // https://www.alibaba.com/product-detail/Smartphone-S24-Ultra-5g-512gb-For_1601429753260.html?spm=a2700.galleryofferlist.p_offer.d_image.d98613a0Gyfj7e&s=p
@@ -631,9 +603,7 @@ export const dataProducts = [
     levelSupplier: 1,
     rating: 4.5,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [{ minQty: 1, maxQty: null, price: 41.99 }],
-    },
+    pricingTiers: [{ minQty: 1, maxQty: null, price: 41.99 }],
   },
   {
     // https://www.alibaba.com/product-detail/Smartphone-S24-Ultra-5g-512gb-For_1601429753260.html?spm=a2700.galleryofferlist.p_offer.d_image.d98613a0Gyfj7e&s=p
@@ -666,10 +636,8 @@ export const dataProducts = [
     supplierName: "Shenzhen Shengyao Digital E-Commerce Co., Ltd.",
     supplierVerified: false,
     levelSupplier: 1,
-    rating: 4.5,
+    rating: 3.3,
     quantityUnit: "pieces",
-    pricingTiers: {
-      create: [{ minQty: 1, maxQty: null, price: 41.99 }],
-    },
+    pricingTiers: [{ minQty: 1, maxQty: null, price: 41.99 }],
   },
 ];

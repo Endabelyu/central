@@ -19,6 +19,9 @@ export const getAllProducts = async (
           mode: "insensitive",
         },
       },
+      include: {
+        pricingTiers: true,
+      },
       skip,
       take: limit,
       orderBy: {
@@ -51,5 +54,10 @@ export const getAllProducts = async (
 };
 
 export const getProductBySlug = async (slug: string) => {
-  return prismaClient.product.findUnique({ where: { slug } });
+  return prismaClient.product.findUnique({
+    where: { slug },
+    include: {
+      pricingTiers: true,
+    },
+  });
 };
