@@ -1,5 +1,5 @@
 import { createTRPCContext } from "@trpc/tanstack-react-query";
-import { httpBatchLink, httpLink } from "@trpc/client";
+import { createTRPCClient, httpBatchLink, httpLink } from "@trpc/client";
 import type { AppRouter } from "@repo/trpc";
 import { QueryClient } from "@tanstack/react-query";
 
@@ -15,3 +15,16 @@ export const trpcConfig = {
     }),
   ],
 };
+export const client = createTRPCClient<AppRouter>({
+  links: [
+    httpLink({
+      url: "http://localhost:3000/api/trpc",
+      // You can pass any HTTP headers you wish here
+      // async headers() {
+      //   return {
+      //     authorization: getAuthCookie(),
+      //   };
+      // },
+    }),
+  ],
+});

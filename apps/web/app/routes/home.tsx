@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, type FormEvent } from "react";
 import {
   Search,
   ShoppingCart,
@@ -12,9 +12,16 @@ import {
   Heart,
   Grid,
   List,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
-import { Link } from "react-router";
+import {
+  Link,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent } from "~/components/ui/card";
@@ -31,176 +38,20 @@ import { Input } from "~/components/ui/input";
 import { Checkbox } from "~/components/ui/checkbox";
 import Image from "~/components/imageContainer";
 import { useQuery } from "@tanstack/react-query";
-import { useTRPC } from "~/lib/trpc";
-
-// const productsDatas = [
-//   {
-//     id: 1,
-//     title: "iPhone 14 Pro Max",
-//     description: "Original Apple iPhone with A16 Bionic chip",
-//     price: 520,
-//     maxPrice: 580,
-//     minOrder: 2,
-//     supplier: "Shenzhen Tech Co., Ltd.",
-//     rating: 5.0,
-//     reviews: 21,
-//     location: "CN",
-//     verified: true,
-//     category: "smartphones",
-//     variants: [
-//       {
-//         storage: "128GB",
-//         colors: ["Space Black", "Silver", "Gold", "Deep Purple"],
-//       },
-//       {
-//         storage: "256GB",
-//         colors: ["Space Black", "Silver", "Gold", "Deep Purple"],
-//       },
-//       { storage: "512GB", colors: ["Space Black", "Silver", "Gold"] },
-//     ],
-//     image: "/placeholder.svg?height=200&width=200",
-//     keywords: ["iphone", "apple", "smartphone", "5g", "pro", "max"],
-//   },
-//   {
-//     id: 2,
-//     title: "Samsung Galaxy S23 Ultra",
-//     description: "Latest Samsung flagship with S Pen",
-//     price: 695,
-//     maxPrice: 750,
-//     minOrder: 5,
-//     supplier: "Guangzhou Electronics Ltd.",
-//     rating: 4.8,
-//     reviews: 15,
-//     location: "CN",
-//     verified: true,
-//     category: "smartphones",
-//     variants: [
-//       {
-//         storage: "256GB",
-//         colors: ["Phantom Black", "Cream", "Green", "Lavender"],
-//       },
-//       { storage: "512GB", colors: ["Phantom Black", "Cream"] },
-//       { storage: "1TB", colors: ["Phantom Black"] },
-//     ],
-//     image: "/placeholder.svg?height=200&width=200",
-//     keywords: [
-//       "samsung",
-//       "galaxy",
-//       "android",
-//       "smartphone",
-//       "5g",
-//       "ultra",
-//       "s pen",
-//     ],
-//   },
-//   {
-//     id: 3,
-//     title: "Google Pixel 7 Pro",
-//     description: "Pure Android experience with Google AI",
-//     price: 455,
-//     maxPrice: 500,
-//     minOrder: 1,
-//     supplier: "Beijing Mobile Tech",
-//     rating: 4.9,
-//     reviews: 8,
-//     location: "CN",
-//     verified: false,
-//     category: "smartphones",
-//     variants: [
-//       { storage: "128GB", colors: ["Obsidian", "Snow", "Hazel"] },
-//       { storage: "256GB", colors: ["Obsidian", "Snow"] },
-//     ],
-//     image: "/placeholder.svg?height=200&width=200",
-//     keywords: [
-//       "google",
-//       "pixel",
-//       "android",
-//       "smartphone",
-//       "5g",
-//       "camera",
-//       "ai",
-//     ],
-//   },
-//   {
-//     id: 4,
-//     title: "Used iPhone 13",
-//     description: "Refurbished iPhone in excellent condition",
-//     price: 320,
-//     maxPrice: 380,
-//     minOrder: 10,
-//     supplier: "Dongguan Trading Co.",
-//     rating: 4.5,
-//     reviews: 32,
-//     location: "CN",
-//     verified: true,
-//     category: "used-phones",
-//     variants: [
-//       {
-//         storage: "128GB",
-//         colors: ["Pink", "Blue", "Midnight", "Starlight", "Red"],
-//       },
-//       { storage: "256GB", colors: ["Pink", "Blue", "Midnight", "Starlight"] },
-//     ],
-//     image: "/placeholder.svg?height=200&width=200",
-//     keywords: ["iphone", "apple", "used", "refurbished", "13", "smartphone"],
-//   },
-//   {
-//     id: 5,
-//     title: "iPhone 13 Mini",
-//     description: "Compact iPhone with full features",
-//     price: 420,
-//     maxPrice: 480,
-//     minOrder: 3,
-//     supplier: "Shenzhen Mobile Hub",
-//     rating: 4.7,
-//     reviews: 12,
-//     location: "CN",
-//     verified: true,
-//     category: "smartphones",
-//     variants: [
-//       {
-//         storage: "128GB",
-//         colors: ["Pink", "Blue", "Midnight", "Starlight", "Red"],
-//       },
-//       { storage: "256GB", colors: ["Pink", "Blue", "Midnight", "Starlight"] },
-//     ],
-//     image: "/placeholder.svg?height=200&width=200",
-//     keywords: ["iphone", "apple", "mini", "compact", "smartphone", "13"],
-//   },
-//   {
-//     id: 6,
-//     title: "OnePlus 11 5G",
-//     description: "Flagship killer with Snapdragon 8 Gen 2",
-//     price: 580,
-//     maxPrice: 640,
-//     minOrder: 2,
-//     supplier: "Guangzhou Tech Solutions",
-//     rating: 4.6,
-//     reviews: 9,
-//     location: "CN",
-//     verified: false,
-//     category: "smartphones",
-//     variants: [
-//       { storage: "128GB", colors: ["Titan Black", "Eternal Green"] },
-//       { storage: "256GB", colors: ["Titan Black", "Eternal Green"] },
-//     ],
-//     image: "/placeholder.svg?height=200&width=200",
-//     keywords: [
-//       "oneplus",
-//       "android",
-//       "smartphone",
-//       "5g",
-//       "snapdragon",
-//       "flagship",
-//     ],
-//   },
-// ];
+import { client, useTRPC } from "~/lib/trpc";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "~/components/ui/carousel";
+import type { Route } from "./+types/product";
 
 const categories = [
   { id: "all", name: "All Products", count: 6 },
-  { id: "smartphones", name: "Smartphones", count: 4 },
-  { id: "used-phones", name: "Used Phones", count: 1 },
-  { id: "accessories", name: "Accessories", count: 0 },
+  { id: "Android", name: "Android", count: 4 },
+  { id: "iPhone", name: "iPhone", count: 1 },
 ];
 
 const useDebounce = (value: string, delay: number) => {
@@ -219,7 +70,24 @@ const useDebounce = (value: string, delay: number) => {
   return debouncedValue;
 };
 
-export default function Home() {
+export async function clientLoader({ request }: Route.ClientLoaderArgs) {
+  // const trpc = useTRPC();
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q") ?? "";
+  const page = url.searchParams.get("page") ?? "";
+  const productsData = await client.product.getAll.query({
+    page: Number(page) || 1,
+    limit: 8,
+    q: q,
+    sort: "asc",
+  });
+  console.log(productsData);
+  return {
+    products: productsData?.products ?? [],
+    pagination: productsData?.pagination ?? null,
+  };
+}
+export default function Home({ loaderData }: Route.ComponentProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -227,13 +95,14 @@ export default function Home() {
   const [sortBy, setSortBy] = useState("relevance");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [currentPage, setCurrentPage] = useState(1);
-  // const [filteredProducts, setFilteredProducts] = useState(products);
+  const [searchParams] = useSearchParams(); // const [filteredProducts, setFilteredProducts] = useState(products);
   const [isLoading, setIsLoading] = useState(false);
   // const [totalResults, setTotalResults] = useState(products.length);
-
+  const { products, pagination } = useLoaderData<typeof clientLoader>();
   // Debounce search query
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
-
+  const productLoading = false;
+  const navigate = useNavigate();
   const ITEMS_PER_PAGE = 8;
 
   // API-ready search function
@@ -385,31 +254,67 @@ export default function Home() {
   //   totalResults,
   // );
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Search is handled by useEffect
+    console.log(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
+    const query = String(formData.get("q"));
+
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (query) {
+      newSearchParams.set("q", query);
+    } else {
+      newSearchParams.delete("q");
+    }
+
+    // if (city && city !== "null" && city !== "none") {
+    //   newSearchParams.set("city", city);
+    // } else {
+    //   newSearchParams.delete("city");
+    // }
+
+    navigate(`?${newSearchParams.toString()}`);
   };
-  const trpc = useTRPC();
-  const {
-    data: productsData,
-    isLoading: productLoading,
-    error,
-  } = useQuery(
-    trpc.product.getAll.queryOptions({
-      page: 1,
-      limit: 8,
-      q: "",
-      sort: "asc",
-    }),
-  );
+  const handleChangePage = (e: FormEvent<HTMLFormElement>, page: string) => {
+    e.preventDefault();
 
-  console.log(productsData, "userQuery");
+    const newSearchParams = new URLSearchParams(searchParams);
 
+    if (page) {
+      newSearchParams.set("page", page);
+    } else {
+      newSearchParams.delete("q");
+    }
+
+    // if (city && city !== "null" && city !== "none") {
+    //   newSearchParams.set("city", city);
+    // } else {
+    //   newSearchParams.delete("city");
+    // }
+
+    navigate(`?${newSearchParams.toString()}`);
+  };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // console.log(productsData, "userQuery");
+  const handlePrevImage = (e: React.MouseEvent, totalImages: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex(prev => (prev > 0 ? prev - 1 : totalImages - 1));
+  };
+
+  const handleNextImage = (e: React.MouseEvent, totalImages: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex(prev => (prev < totalImages - 1 ? prev + 1 : 0));
+  };
   return (
     <div className="min-h-screen ">
       {/* Simplified Header */}
       <header className="bg-white py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
@@ -444,19 +349,17 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="lg:max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="lg:max-w-[1440px]  mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Search Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">
-            Mobile Phones & Accessories
-          </h1>
           <form onSubmit={handleSearch} className="flex gap-2 max-w-2xl">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
+                name="q"
                 type="text"
                 placeholder="Search for products, brands, or keywords..."
-                value={searchQuery}
+                defaultValue={searchParams.get("q") || ""}
                 onChange={e => setSearchQuery(e.target.value)}
                 className="pl-10 h-12 bg-white"
               />
@@ -478,7 +381,7 @@ export default function Home() {
 
         <div className="flex gap-6">
           {/* Sidebar Filters */}
-          <div className="w-64 space-y-6 lg:block hidden">
+          <div className="w-48 space-y-6 lg:block hidden">
             {/* Categories */}
             <Card>
               <CardContent className="p-4">
@@ -571,10 +474,7 @@ export default function Home() {
               variant="outline"
               className="w-full"
               onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("all");
-                setPriceRange([0, 1000]);
-                setSelectedRatings([]);
+                navigate(`/`);
               }}
             >
               Clear All Filters
@@ -589,11 +489,17 @@ export default function Home() {
                 <p className="text-sm text-gray-600">
                   {productLoading ? (
                     "Searching..."
-                  ) : productsData?.pagination?.total ? (
+                  ) : pagination?.total ? (
                     <>
-                      Showing {productsData?.pagination?.currentPage}-
-                      {productsData.products.length} of{" "}
-                      {productsData?.pagination?.total} results
+                      Showing
+                      {currentPage === 1
+                        ? ` ${pagination?.currentPage} `
+                        : ` ${(pagination?.currentPage - 1) * 8 + 1} `}
+                      -
+                      {currentPage === 1
+                        ? `8 `
+                        : ` ${pagination?.currentPage * 8} `}
+                      of {pagination?.total} results
                       {debouncedSearchQuery && (
                         <span>
                           {" "}
@@ -607,22 +513,6 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex items-center space-x-4">
-                {/* <div className="flex items-center space-x-2">
-                  <Button
-                    variant={viewMode === "grid" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setViewMode("grid")}
-                  >
-                    <Grid className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setViewMode("list")}
-                  >
-                    <List className="h-4 w-4" />
-                  </Button>
-                </div> */}
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="w-48">
                     <SelectValue />
@@ -665,153 +555,304 @@ export default function Home() {
                     : "space-y-4"
                 }
               >
-                {productsData?.products.map(productsData => (
-                  <Card
-                    key={productsData.id}
-                    className="hover:shadow-lg transition-shadow"
-                  >
-                    <CardContent className="p-4">
-                      <div className="relative mb-3">
-                        <Image
-                          src={productsData.imageUrl || "/placeholder.svg"}
-                          alt={productsData.name}
-                          width={200}
-                          height={200}
-                          className="w-full h-48 object-cover rounded-md"
-                        />
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="absolute top-2 right-2 h-8 w-8 p-0 bg-white/80 hover:bg-white"
-                        >
-                          <Heart className="h-4 w-4" />
-                        </Button>
-                      </div>
-
-                      <Link to={`product/${productsData.slug}`}>
-                        <h3 className="font-medium text-sm mb-1 hover:text-orange-500 cursor-pointer">
-                          {productsData.name}
-                        </h3>
-                      </Link>
-                      <p className="text-xs text-gray-600 mb-2">
-                        {productsData.description}
-                      </p>
-
-                      {/* productsData Variants */}
-                      <div className="mb-3">
-                        <div className="text-xs text-gray-500 mb-1">
-                          Available variants:
+                {products && products.length > 0 ? (
+                  products?.map(productsData => (
+                    <Card
+                      key={productsData.id}
+                      className="hover:shadow-lg transition-shadow h-full flex flex-col"
+                    >
+                      <CardContent className="p-4 flex flex-col h-full">
+                        <div className="relative mb-3 group">
+                          <Carousel className=" ">
+                            <CarouselContent>
+                              {productsData.imageGallery.map((_, index) => (
+                                <CarouselItem key={index}>
+                                  <div className="p-1">
+                                    <Image
+                                      src={_}
+                                      alt={productsData.name}
+                                      width={200}
+                                      height={200}
+                                      className="w-full h-48 object-cover rounded-md transition-transform duration-200"
+                                    />
+                                  </div>
+                                </CarouselItem>
+                              ))}
+                            </CarouselContent>
+                            <CarouselPrevious className="-left-4" />
+                            <CarouselNext className="-right-4" />
+                          </Carousel>
                         </div>
-                        {/* <div className="flex flex-wrap gap-1">
-                          {productsData.variants
-                            .slice(0, 2)
-                            .map((variant, index) => (
-                              <Badge
-                                key={index}
-                                variant="outline"
-                                className="text-xs"
-                              >
-                                {variant.storage}
+
+                        {/* Content area that grows to fill available space */}
+                        <div className="flex-1 flex flex-col">
+                          <Link to={`/product/${productsData.id}`}>
+                            <h3 className="font-medium text-sm mb-1 hover:text-orange-500 cursor-pointer line-clamp-2">
+                              {productsData.name}
+                            </h3>
+                          </Link>
+                          <p className="text-xs text-gray-600  line-clamp-2">
+                            {productsData.description}
+                          </p>
+
+                          {/* Product Variants */}
+                          {/* <div className="mb-3">
+                          <div className="flex flex-wrap gap-1">
+                            {productsData.variant
+                              .slice(0, 2)
+                              .map((variant, index) => (
+                                <Badge
+                                  key={index}
+                                  variant="outline"
+                                  className="text-xs"
+                                >
+                                  {variant}
+                                </Badge>
+                              ))}
+                            {productsData.variant.length > 2 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{productsData.variant.length - 2} more
                               </Badge>
-                            ))}
-                          {productsData.variants.length > 2 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{productsData.variants.length - 2} more
-                            </Badge>
-                          )}
-                        </div> */}
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="text-lg font-bold text-orange-600">
-                          US${productsData.price}-{productsData.price}
-                        </div>
-
-                        {/* <div className="text-xs text-gray-600">
-                          Min. order: {productsData.minOrder} pieces
-                        </div> */}
-
-                        <div className="text-xs text-blue-600 hover:underline cursor-pointer">
-                          {productsData.supplierName}
-                          {/* {productsData. && (
-                            <Badge variant="secondary" className="ml-1 text-xs">
-                              Verified
-                            </Badge>
-                          )} */}
-                        </div>
-
-                        <div className="flex items-center justify-between text-xs text-gray-500">
-                          <div className="flex items-center space-x-1">
-                            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                            {/* <span>{productsData.rating}/5.0</span> */}
-                            {/* <span>({productsData.reviews})</span> */}
+                            )}
                           </div>
-                          {/* <Badge variant="outline" className="text-xs">
-                            {productsData.location}
-                          </Badge> */}
-                        </div>
+                        </div> */}
 
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="w-full mt-2"
-                          onClick={() => {
-                            window.location.href = "/login?redirect=chat";
-                          }}
-                        >
-                          <MessageCircle className="h-4 w-4 mr-1" />
-                          Contact Supplier
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                          {/* Flexible content area */}
+                          <div className="flex-1 flex flex-col justify-between">
+                            <div className="space-y-2">
+                              <div className="text-2xl font-bold ">
+                                US${productsData.pricingTiers[0].price}-
+                                {
+                                  productsData.pricingTiers[
+                                    productsData.pricingTiers.length - 1
+                                  ].price
+                                }
+                              </div>
+
+                              <div className="text-xs text-gray-600">
+                                Min. order: {productsData.minimumOrderQuantity}{" "}
+                                pieces
+                              </div>
+
+                              <div className="text-xs text-blue-600 hover:underline cursor-pointer">
+                                {productsData.supplierName}
+                              </div>
+                              <div>
+                                {productsData.supplierVerified && (
+                                  <Badge
+                                    variant="secondary"
+                                    className="ml-1 text-xs"
+                                  >
+                                    Verified
+                                  </Badge>
+                                )}
+                              </div>
+
+                              <div className="flex items-center justify-between text-xs text-gray-500">
+                                <div className="flex items-center space-x-1">
+                                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                                  <span>{productsData.rating}/5.0</span>
+                                  {/* <span>({productsData.reviews})</span> */}
+                                </div>
+                                {/* <Badge variant="outline" className="text-xs">
+                                {productsData.location}
+                              </Badge> */}
+                              </div>
+                            </div>
+
+                            {/* Contact button always at bottom */}
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="w-full mt-3 "
+                              // onClick={() => {
+                              //   window.location.href = "/login?redirect=chat";
+                              // }}
+                            >
+                              <MessageCircle className="h-4 w-4 mr-1" />
+                              Contact Supplier
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    // <Card
+                    //   key={productsData.id}
+                    //   className="hover:shadow-lg transition-shadow py-0"
+                    // >
+                    //   <CardContent className="p-4 justify-between">
+                    //     <div className="relative mb-3">
+                    //       <Image
+                    //         src={productsData.imageUrl || "/placeholder.svg"}
+                    //         alt={productsData.name}
+                    //         width={200}
+                    //         height={200}
+                    //         className="w-full h-48 object-cover rounded-md"
+                    //       />
+                    //       {/* <Button
+                    //         variant="ghost"
+                    //         size="sm"
+                    //         className="absolute top-2 right-2 h-8 w-8 p-0 bg-white/80 hover:bg-white"
+                    //       >
+                    //         <Heart className="h-4 w-4" />
+                    //       </Button> */}
+                    //     </div>
+
+                    //     <Link to={`product/${productsData.slug}`}>
+                    //       <h3 className="truncate font-medium text-sm mb-1 hover:text-orange-500 cursor-pointer">
+                    //         {productsData.name}
+                    //       </h3>
+                    //       <p className="text-xs text-gray-600 mb-2">
+                    //         {productsData.description}
+                    //       </p>
+
+                    //       {/* productsData Variants */}
+                    //       <div className="mb-3">
+                    //         <div className="text-xs text-gray-500 mb-1">
+                    //           Min. order: {productsData.minimumOrderQuantity}{" "}
+                    //           {productsData.quantityUnit}
+                    //         </div>
+                    //         {/* <div className="flex flex-wrap gap-1">
+                    //         {productsData.variants
+                    //           .slice(0, 2)
+                    //           .map((variant, index) => (
+                    //             <Badge
+                    //               key={index}
+                    //               variant="outline"
+                    //               className="text-xs"
+                    //             >
+                    //               {variant.storage}
+                    //             </Badge>
+                    //           ))}
+                    //         {productsData.variants.length > 2 && (
+                    //           <Badge variant="outline" className="text-xs">
+                    //             +{productsData.variants.length - 2} more
+                    //           </Badge>
+                    //         )}
+                    //       </div> */}
+                    //       </div>
+
+                    //       <div className="text-lg font-bold space-y-2">
+                    //         <p>
+                    //           US${productsData.price}-{productsData.price}
+                    //         </p>
+                    //       </div>
+                    //     </Link>
+                    //     <div className="space-y-2">
+                    //       {/* <div className="text-xs text-gray-600">
+                    //         Min. order: {productsData.minOrder} pieces
+                    //       </div> */}
+
+                    //       <div className="text-xs text-blue-600  ">
+                    //         <p>{productsData.supplierName}</p>
+                    //       </div>
+                    //       <div>
+                    //         {productsData.supplierVerified && (
+                    //           <Badge variant="secondary" className="ml-1 text-xs">
+                    //             Verified
+                    //           </Badge>
+                    //         )}
+                    //       </div>
+                    //       <div className="flex items-center justify-between text-xs text-gray-500">
+                    //         <div className="flex items-center space-x-1">
+                    //           <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    //           <span>{productsData.rating}/5.0</span>
+                    //           {/* <span>({productsData.reviews})</span> */}
+                    //         </div>
+                    //         {/* <Badge variant="outline" className="text-xs">
+                    //           {productsData.location}
+                    //         </Badge> */}
+                    //       </div>
+                    //     </div>
+                    //   </CardContent>
+                    //   <Button
+                    //     variant="outline"
+                    //     size="sm"
+                    //     className="w-full mt-2"
+                    //     onClick={() => {
+                    //       window.location.href = "/login?redirect=chat";
+                    //     }}
+                    //   >
+                    //     <MessageCircle className="h-4 w-4 mr-1" />
+                    //     Contact Supplier
+                    //   </Button>
+                    // </Card>
+                  ))
+                ) : (
+                  <p>No products found</p>
+                )}
               </div>
             )}
 
             {/* Pagination */}
-            {productsData &&
-              productsData.pagination.totalPages &&
-              productsData.pagination.totalPages > 1 && (
+            {pagination &&
+              pagination.total > 0 &&
+              pagination.totalPages &&
+              pagination.totalPages > 1 && (
                 <div className="flex items-center justify-center space-x-2 mt-8">
-                  <Button
-                    variant="outline"
-                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                    disabled={productsData.pagination.currentPage === 1}
+                  <form
+                    onSubmit={e =>
+                      handleChangePage(
+                        e,
+                        String(Number(searchParams.get("page")) - 1),
+                      )
+                    }
+                    className="flex gap-2 max-w-2xl"
                   >
-                    Previous
-                  </Button>
-                  {[...Array(productsData.pagination.totalPages)].map(
-                    (_, index) => {
-                      const page = index + 1;
-                      return (
+                    {" "}
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        setCurrentPage(Math.max(1, currentPage - 1))
+                      }
+                      disabled={pagination.currentPage === 1}
+                    >
+                      Previous
+                    </Button>
+                  </form>{" "}
+                  {[...Array(pagination.totalPages)].map((_, index) => {
+                    const page = index + 1;
+                    return (
+                      <form
+                        onSubmit={e => handleChangePage(e, String(page))}
+                        className="flex gap-2 max-w-2xl"
+                      >
                         <Button
+                          type="submit"
                           key={page}
-                          variant={currentPage === page ? "default" : "outline"}
-                          onClick={() => setCurrentPage(page)}
+                          variant={
+                            searchParams.get("page") === String(page)
+                              ? "default"
+                              : "outline"
+                          }
                           className="w-10"
                         >
                           {page}
                         </Button>
-                      );
-                    },
-                  )}
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      setCurrentPage(
-                        Math.min(
-                          productsData.pagination.totalPages,
-                          currentPage + 1,
-                        ),
+                      </form>
+                    );
+                  })}
+                  <form
+                    onSubmit={e =>
+                      handleChangePage(
+                        e,
+                        searchParams.get("page")
+                          ? String(Number(searchParams.get("page")) + 1)
+                          : "2",
                       )
                     }
-                    disabled={
-                      currentPage === productsData.pagination.totalPages
-                    }
+                    className="flex gap-2 max-w-2xl"
                   >
-                    Next
-                  </Button>
+                    <Button
+                      variant="outline"
+                      disabled={
+                        Number(searchParams.get("page")) ===
+                        pagination.totalPages
+                      }
+                    >
+                      Next
+                    </Button>
+                  </form>
                 </div>
               )}
           </div>
