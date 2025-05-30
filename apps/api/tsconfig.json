@@ -5,12 +5,13 @@
     "rootDir": "src",
     "outDir": "dist",
     "jsxImportSource": "hono/jsx",
+    "noEmit": true,
     "strict": true,
     "jsx": "react-jsx",
     "baseUrl": ".", // needed for `@repo/*` resolution
     "paths": {
-      "@repo/trpc": ["../../packages/trpc/src/index"]
+      "@repo/trpc": ["../../packages/trpc/index"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../../packages/trpc"]
 }
