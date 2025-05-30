@@ -5,7 +5,8 @@
     "**/.client/**/*",
     ".react-router/types/**/*",
     "src",
-    "../../packages/trpc"
+    "../../packages/trpc",
+    "../../apps/api"
   ],
   "extends": "../../packages/tsconfig.json",
 
@@ -21,6 +22,7 @@
     "paths": {
       "~/*": ["./app/*"],
       "@/*": ["./src/*"],
+      "@api/*": ["../../apps/api/*"],
       "@trpc/*": ["../../packages/trpc/*"]
     },
     "esModuleInterop": true,

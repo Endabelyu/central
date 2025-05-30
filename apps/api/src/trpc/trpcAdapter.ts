@@ -1,6 +1,6 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
-import { appRouter } from "../../../../packages/trpc";
+import { appRouter } from ".";
 
 const trpcRoute = new Hono();
 
