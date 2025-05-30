@@ -1,8 +1,8 @@
 {
+  "include": ["src", "../../packages/trpc"],
   "extends": "../../packages/tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "rootDir": "src",
+    "rootDir": "../../",
     "outDir": "dist",
     "jsxImportSource": "hono/jsx",
     "noEmit": true,
@@ -12,6 +12,5 @@
     "paths": {
       "@repo/trpc": ["../../packages/trpc/index"]
     }
-  },
-  "include": ["src", "../../packages/trpc"]
+  }
 }
