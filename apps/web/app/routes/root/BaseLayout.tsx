@@ -18,12 +18,11 @@ import { useState } from "react";
 import { TRPCProvider } from "~/lib/trpc";
 
 const BaseLayout = () => {
-  const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     createTRPCClient<AppRouter>({
       links: [
         httpLink({
-          url: "http://localhost:3000/api/trpc", // Replace with your API URL
+          url: import.meta.env.VITE_BACKEND_URL + "/api/trpc", // Replace with your API URL
         }),
       ],
     }),
@@ -32,11 +31,7 @@ const BaseLayout = () => {
   return (
     // <CookiesProvider defaultSetOptions={{ path: "/" }}>
     <div className=" min-h-screen  bg-[#f4f4f4]">
-      <QueryClientProvider client={queryClient}>
-        <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
-          <Outlet />
-        </TRPCProvider>
-      </QueryClientProvider>
+      <Outlet />
       <ScrollRestoration />
       <Scripts />
     </div>

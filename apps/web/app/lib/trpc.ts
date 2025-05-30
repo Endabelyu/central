@@ -18,7 +18,7 @@ export const trpcConfig = {
 export const client = createTRPCClient<AppRouter>({
   links: [
     httpLink({
-      url: "http://localhost:3000/api/trpc",
+      url: import.meta.env.VITE_BACKEND_URL + "api/trpc",
       // You can pass any HTTP headers you wish here
       // async headers() {
       //   return {
