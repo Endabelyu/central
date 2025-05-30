@@ -8,6 +8,7 @@ export const getAllProducts = async (
   limit: number,
   q: string,
   sort: SortType,
+  category: string,
 ) => {
   const skip = page > 0 ? (page - 1) * limit : 0;
 
@@ -18,7 +19,12 @@ export const getAllProducts = async (
           contains: q,
           mode: "insensitive",
         },
+        category: {
+          contains: category,
+          mode: "insensitive",
+        },
       },
+
       include: {
         pricingTiers: true,
       },

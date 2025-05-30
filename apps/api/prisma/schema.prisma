@@ -42,6 +42,7 @@ model Product {
   sku                   String   @unique
   slug                  String   @unique
   name                  String
+  category              String @default("Android")
   description           String
   imageUrl              String?
   stockQuantity         Int

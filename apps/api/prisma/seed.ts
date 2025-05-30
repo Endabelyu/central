@@ -16,6 +16,7 @@ async function main() {
     sku: `SKU-${nanoid(6).toUpperCase()}`,
     slug: `${slugify(base.name, { lower: true })}-${nanoid(6)}`,
     name: base.name,
+    category: base.category,
     description: base.description,
     stockQuantity: base.stockQuantity,
     minimumOrderQuantity: base.minimumOrderQuantity,

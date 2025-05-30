@@ -53,6 +53,20 @@ const categories = [
   { id: "Android", name: "Android", count: 4 },
   { id: "iPhone", name: "iPhone", count: 1 },
 ];
+const ratings = [
+  {
+    id: "5",
+    name: "5",
+  },
+  {
+    id: "4",
+    name: "4",
+  },
+  {
+    id: "3",
+    name: "3",
+  },
+];
 
 const useDebounce = (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -75,11 +89,13 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q") ?? "";
   const page = url.searchParams.get("page") ?? "";
+  const categories = url.searchParams.get("category") ?? "";
   const productsData = await client.product.getAll.query({
     page: Number(page) || 1,
     limit: 8,
     q: q,
     sort: "asc",
+    category: categories,
   });
   console.log(productsData);
   return {
@@ -91,7 +107,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+  const [selectedRatings, setSelectedRatings] = useState<number>(5);
   const [sortBy, setSortBy] = useState("relevance");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [currentPage, setCurrentPage] = useState(1);
@@ -261,10 +277,12 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     const query = String(formData.get("q"));
 
     const newSearchParams = new URLSearchParams(searchParams);
-
+    console.log(newSearchParams, "newSearchParams");
     if (query) {
       newSearchParams.set("q", query);
+      newSearchParams.set("page", "1");
     } else {
+      newSearchParams.delete("page");
       newSearchParams.delete("q");
     }
 
@@ -284,7 +302,30 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     if (page) {
       newSearchParams.set("page", page);
     } else {
-      newSearchParams.delete("q");
+      newSearchParams.delete("page");
+    }
+
+    // if (city && city !== "null" && city !== "none") {
+    //   newSearchParams.set("city", city);
+    // } else {
+    //   newSearchParams.delete("city");
+    // }
+
+    navigate(`?${newSearchParams.toString()}`);
+  };
+  const handleChangeCategory = (
+    e: FormEvent<HTMLFormElement>,
+    categoryId?: string,
+  ) => {
+    e.preventDefault();
+    setSelectedCategory(String(categoryId));
+
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (categoryId) {
+      newSearchParams.set("category", categoryId);
+    } else {
+      newSearchParams.delete("category");
     }
 
     // if (city && city !== "null" && city !== "none") {
@@ -296,20 +337,6 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     navigate(`?${newSearchParams.toString()}`);
   };
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // console.log(productsData, "userQuery");
-  const handlePrevImage = (e: React.MouseEvent, totalImages: number) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex(prev => (prev > 0 ? prev - 1 : totalImages - 1));
-  };
-
-  const handleNextImage = (e: React.MouseEvent, totalImages: number) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex(prev => (prev < totalImages - 1 ? prev + 1 : 0));
-  };
   return (
     <div className="min-h-screen ">
       {/* Simplified Header */}
@@ -388,20 +415,27 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                 <h3 className="font-semibold mb-3">Categories</h3>
                 <div className="space-y-2">
                   {categories.map(category => (
-                    <div
+                    <form
+                      onSubmit={e => handleChangeCategory(e, category.id)}
                       key={category.id}
-                      className={`flex items-center justify-between p-2 rounded cursor-pointer hover:bg-gray-50 ${
-                        selectedCategory === category.id
-                          ? "bg-orange-50 text-orange-600"
-                          : ""
-                      }`}
-                      onClick={() => setSelectedCategory(category.id)}
                     >
-                      <span className="text-sm">{category.name}</span>
-                      <span className="text-xs text-gray-500">
-                        ({category.count})
-                      </span>
-                    </div>
+                      <Button
+                        key={category.id}
+                        name="category"
+                        className={`flex w-full items-center justify-between p-2 rounded cursor-pointer hover:bg-gray-200 ${
+                          selectedCategory === category.id
+                            ? "bg-orange-50 text-orange-600"
+                            : "bg-white"
+                        }`}
+                      >
+                        <span className="text-sm text-foreground">
+                          {category.name}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          ({category.count})
+                        </span>
+                      </Button>
+                    </form>
                   ))}
                 </div>
               </CardContent>
@@ -430,47 +464,50 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             </Card>
 
             {/* Ratings */}
-            <Card>
-              <CardContent className="p-4">
+            {/* <Card>
+              <CardContent className="p-2">
                 <h3 className="font-semibold mb-3">Customer Reviews</h3>
                 <div className="space-y-2">
-                  {[5, 4, 3].map(rating => (
-                    <div key={rating} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`rating-${rating}`}
-                        checked={selectedRatings.includes(rating)}
-                        onCheckedChange={(checked: boolean) => {
-                          if (checked) {
-                            setSelectedRatings([...selectedRatings, rating]);
-                          } else {
-                            setSelectedRatings(
-                              selectedRatings.filter(r => r !== rating),
-                            );
-                          }
-                        }}
-                      />
+                  {ratings.map(rating => (
+                    <div key={rating.id} className=" ">
                       <Label
-                        htmlFor={`rating-${rating}`}
-                        className="flex items-center cursor-pointer"
+                        htmlFor={`rating-${rating.id}`}
+                        className=" ml-8 items-center cursor-pointer relative "
                       >
-                        <div className="flex items-center mr-2">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`h-3 w-3 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
-                            />
-                          ))}
+                        <input
+                          type="radio"
+                          id={`rating-${rating}`}
+                          name="rating"
+                          value={rating.id}
+                          checked={selectedRatings === Number(rating.id)}
+                          onChange={() => setSelectedRatings(Number(rating.id))}
+                          className="hidden peer"
+                        />{" "}
+                        <span className="checkmark peer-checked:bg-orange-400"></span>
+                        <div className="flex ">
+                          <div className="flex items-center mr-2">
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                className={`h-3 w-3 ${i < Number(rating.id) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-sm">
+                            {rating.id === "5"
+                              ? `${rating.id}.0`
+                              : `${rating.id}.0 & up`}{" "}
+                          </span>
                         </div>
-                        <span className="text-sm">{rating}.0 & up</span>
                       </Label>
                     </div>
                   ))}
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Clear Filters */}
-            <Button
+            {/* <Button
               variant="outline"
               className="w-full"
               onClick={() => {
@@ -478,7 +515,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
               }}
             >
               Clear All Filters
-            </Button>
+            </Button> */}
           </div>
 
           {/* Main Content */}
@@ -516,7 +553,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                   )}
                 </p>
               </div>
-              <div className="flex items-center space-x-4">
+              {/* <div className="flex items-center space-x-4">
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="w-48">
                     <SelectValue />
@@ -533,7 +570,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                     <SelectItem value="reviews">Most Reviews</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
             </div>
 
             {/* Product Grid/List */}
@@ -820,6 +857,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                       <form
                         onSubmit={e => handleChangePage(e, String(page))}
                         className="flex gap-2 max-w-2xl"
+                        key={page}
                       >
                         <Button
                           type="submit"

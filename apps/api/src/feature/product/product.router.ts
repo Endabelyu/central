@@ -12,6 +12,7 @@ export const productRouter = router({
         input.limit,
         input.q,
         input.sort,
+        input.category,
       );
     }),
 
