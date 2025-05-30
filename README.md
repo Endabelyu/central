@@ -96,6 +96,7 @@ List all pages in the Central Web application.
 - Routing: React Router 7
 - CSS Framework: Tailwind CSS
 - Components Library: Shadcn UI
+- deployment: Netlify [Central](https://central.endabelyu.com)
 
 ## API
 
@@ -109,10 +110,8 @@ List all routes in the Central API.
 base route : /api/trpc
 ```
 
-- / - This route is the home page of the application.
-- /:slug - This route is for displaying the details of a specific product.
-- /register - This route is used to register a new account.
-- /login - This route is used to login to an existing account.
+- getAll - This route for getting all products.
+- getBySlug - This route for getting a product by slug.
 
 # Tech Stack and Dependencies
 
@@ -122,3 +121,4 @@ base route : /api/trpc
 - Routing: React Router 7
 - validation: Zod
 - Database: Prisma ORM && Neon Postgresql
+- deployment: Render [Central-api](https://api-central.endabelyu.com)
