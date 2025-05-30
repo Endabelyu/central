@@ -118,7 +118,7 @@ base route : /api/trpc
 
 - Language: TypeScript
 - Runtime: Bun
-- Framework/Library: React
+- Framework/Library: Hono
 - Routing: React Router 7
-- CSS Framework: Tailwind CSS
-- Components Library: Shadcn UI
+- validation: Zod
+- Database: Prisma ORM && Neon Postgresql
