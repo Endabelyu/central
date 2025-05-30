@@ -49,9 +49,9 @@ model Product {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   condition             String       // e.g., "Original used"
-  grade                 String[]       // e.g., "A+ (Almost new)"
-  ram                   String[]       // e.g., "4GB"
-  variant                   String[] @default([])      // e.g., "4GB"
+  grade                 String[]  @default([])      // e.g., "A+ (Almost new)"
+  ram                   String[]  @default([])       // e.g., "16"
+  variant              String[] @default([])      // e.g., "red"
   storage               String[]  @default([])    // ["64GB", "128GB", "256GB"]
   screenSize            String?       // e.g., "5.4 inches"
   battery               String?       // e.g., "2815 mAh"
@@ -61,8 +61,9 @@ model Product {
   simType               String?       // e.g., "Nano-SIM, eSIM"
   nfc                   Boolean?      // true or false
   brand                 String?       // e.g., "Apple"
-  model           String[]       // e.g., "Phone 12 mini"
-  imageGallery          String[]      // list of additional image URLs
+  model                 String[]   @default([])     // e.g., "Phone 12 mini"
+  plug                 String[]   @default([])     // e.g., "US"
+  imageGallery          String[]  @default([])     // list of additional image URLs
   videoUrl              String?       // product video
   supplierName          String       // e.g., "Shenzhen Soonton..."
   quantityUnit          String  @default("pieces")     // e.g., "Shenzhen Soonton..."
