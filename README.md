@@ -1,14 +1,8 @@
-# Turborepo starter
+# Central
 
-This Turborepo starter is maintained by the Turborepo core team.
+This project build with Turborepo.
 
 ## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
 
 ## What's inside?
 
@@ -16,8 +10,10 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
+- `web`: React web application with React Router 7
+- `api`: Hono API with [trpc](https://trpc.io)
+- `@repo/trpc`: reusable trpc router for the project
+- `@repo/schema`:reusable schema for the project
 - `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
@@ -31,54 +27,98 @@ This Turborepo has some additional tools already setup for you:
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
+- [bun](https://bun.sh/) for fast, lightweight dev environments
+
+### Develop
+
+To develop all apps and packages, run the following command:
+
+## Install dependencies
+
+```
+cd central
+bun install
+```
+
+## Write the env file
+
+```
+cp .env.example .env
+```
+
+## Doing prisma migration and running seed
+
+```
+cd apps/api
+bun run migrate
+bun seed
+```
+
+## Install run development server
+
+```
+**Do this in root folder**
+bun run dev
+```
 
 ### Build
 
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
-pnpm build
+cd central
+bun run build
 ```
 
-### Develop
+## Web application
 
-To develop all apps and packages, run the following command:
+The web application is inside the apps/web folder.
+
+# Features
+
+- Showing list of products with pagination , search and filters
+- Showing product details page with images, variant, storage, model, price, ram for inquire product
+
+# List Pages
+
+List all pages in the Central Web application.
+
+- / - This route is the home page of the application.
+- /:slug - This route is for displaying the details of a specific product.
+- /register - This route is used to register a new account.
+- /login - This route is used to login to an existing account.
+
+# Tech Stack and Dependencies
+
+- Language: TypeScript
+- Runtime: Bun
+- Framework/Library: React
+- Routing: React Router 7
+- CSS Framework: Tailwind CSS
+- Components Library: Shadcn UI
+
+## API
+
+The API is inside the apps/api folder.
+
+# List Routes
+
+List all routes in the Central API.
 
 ```
-cd my-turborepo
-pnpm dev
+base route : /api/trpc
 ```
 
-### Remote Caching
+- / - This route is the home page of the application.
+- /:slug - This route is for displaying the details of a specific product.
+- /register - This route is used to register a new account.
+- /login - This route is used to login to an existing account.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+# Tech Stack and Dependencies
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- Language: TypeScript
+- Runtime: Bun
+- Framework/Library: React
+- Routing: React Router 7
+- CSS Framework: Tailwind CSS
+- Components Library: Shadcn UI
