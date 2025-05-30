@@ -122,3 +122,7 @@ base route : /api/trpc
 - validation: Zod
 - Database: Prisma ORM && Neon Postgresql
 - deployment: Render [Central-api](https://api-central.endabelyu.com)
+
+## A short write-up in the README explaining decisions made during the development process, including challenges you encountered and how they were resolved.
+
+- during development process is the most important part of the project because its my first time using trpc as api layer , so i must learn how to use it and how to make it work with prisma ORM and Neon Postgresql plus how to integrate it with Web apps to make it work. its take so much time but i finally make it work. and i almost forgot to using react router 7 framework mode so in the middle of the development i have to change the framework to react router 7 framework mode, but i dont have much time left, so i served at my best to finish the project according to the objectives.
