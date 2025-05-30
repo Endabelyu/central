@@ -46,7 +46,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "~/components/ui/carousel";
-import type { Route } from "./+types/product";
+import type { Route } from "./+types/home";
 
 const categories = [
   { id: "all", name: "All Products", count: 6 },
@@ -540,7 +540,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             {productLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {[...Array(ITEMS_PER_PAGE)].map((_, index) => (
-                  <Card key={index} className="animate-pulse">
+                  <Card key={index} className="animate-pulse py-3">
                     <CardContent className="p-4">
                       <div className="bg-gray-200 h-48 rounded-md mb-3"></div>
                       <div className="bg-gray-200 h-4 rounded mb-2"></div>
@@ -563,23 +563,23 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                   products?.map(productsData => (
                     <Card
                       key={productsData.id}
-                      className="hover:shadow-lg transition-shadow h-full flex flex-col"
+                      className="hover:shadow-lg transition-shadow h-full flex flex-col py-3"
                     >
-                      <CardContent className="p-4 grid grid-cols-1 h-full">
+                      <CardContent className="px-4 grid grid-cols-1 h-full">
                         <div className="relative mb-3 group">
                           <Carousel className=" ">
                             <CarouselContent>
                               {productsData.imageGallery.map((_, index) => (
                                 <CarouselItem key={index}>
-                                  <div className="p-1">
-                                    <Image
-                                      src={_}
-                                      alt={productsData.name}
-                                      width={200}
-                                      height={200}
-                                      className="w-full h-48 object-cover rounded-md transition-transform duration-200"
-                                    />
-                                  </div>
+                                  {/* <div className="p-1"> */}
+                                  <Image
+                                    src={_}
+                                    alt={productsData.name}
+                                    width={200}
+                                    height={200}
+                                    className="w-full h-48 object-cover object-center rounded-md transition-transform duration-200"
+                                  />
+                                  {/* </div> */}
                                 </CarouselItem>
                               ))}
                             </CarouselContent>
@@ -590,7 +590,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
                         {/* Content area that grows to fill available space */}
                         <div className="flex-1 flex flex-col">
-                          <Link to={`/product/${productsData.id}`}>
+                          <Link to={`/product/${productsData.slug}`}>
                             <h3 className="font-medium text-sm mb-1 hover:text-orange-500 cursor-pointer line-clamp-2">
                               {productsData.name}
                             </h3>
