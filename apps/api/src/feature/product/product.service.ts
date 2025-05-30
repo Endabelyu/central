@@ -8,10 +8,9 @@ export const getAllProducts = async (
   limit: number,
   q: string,
   sort: SortType,
-  category: string,
+  category?: string,
 ) => {
   const skip = page > 0 ? (page - 1) * limit : 0;
-
   const [products, total] = await Promise.all([
     prismaClient.product.findMany({
       where: {
@@ -38,6 +37,10 @@ export const getAllProducts = async (
       where: {
         name: {
           contains: q,
+          mode: "insensitive",
+        },
+        category: {
+          contains: category,
           mode: "insensitive",
         },
       },

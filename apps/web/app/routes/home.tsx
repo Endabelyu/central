@@ -322,7 +322,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
     const newSearchParams = new URLSearchParams(searchParams);
 
-    if (categoryId) {
+    if (categoryId && categoryId !== "all") {
       newSearchParams.set("category", categoryId);
     } else {
       newSearchParams.delete("category");
@@ -353,10 +353,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             </Link>
 
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm">
+              {/* <Button variant="ghost" size="sm">
                 <ShoppingCart className="h-4 w-4 mr-1" />
                 Cart
-              </Button>
+              </Button> */}
               <Link to="/login">
                 <Button variant="ghost" size="sm">
                   <User className="h-4 w-4 mr-1" />
@@ -431,9 +431,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                         <span className="text-sm text-foreground">
                           {category.name}
                         </span>
-                        <span className="text-xs text-gray-500">
+                        {/* <span className="text-xs text-gray-500">
                           ({category.count})
-                        </span>
+                        </span> */}
                       </Button>
                     </form>
                   ))}
@@ -441,8 +441,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
               </CardContent>
             </Card>
 
+            {/* not finished yet */}
             {/* Price Range */}
-            <Card>
+            {/* <Card>
               <CardContent className="p-4">
                 <h3 className="font-semibold mb-3">Price Range (USD)</h3>
                 <div className="space-y-4">
@@ -461,7 +462,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
+            {/* not finished yet */}
 
             {/* Ratings */}
             {/* <Card>
