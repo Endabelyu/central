@@ -6,7 +6,11 @@
     "outDir": "dist",
     "jsxImportSource": "hono/jsx",
     "strict": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".", // needed for `@repo/*` resolution
+    "paths": {
+      "@repo/trpc": ["../../packages/trpc/src/index"]
+    }
   },
   "include": ["src"]
 }
